@@ -43,7 +43,7 @@ public class BooksActions {
                 .post("/BookStore/v1/Books")
                 .then()
                 .spec(responseSpec201);
-                return this;
+        return this;
     }
 
     @Step("Get a list of all books for user")
@@ -88,8 +88,6 @@ public class BooksActions {
 
     @Step("Verify that cart is empty")
     public void checkResultOnApi() {
-
-        BooksActions booksApi = new BooksActions();
         List<BookModel> books = BooksActions.getUserBooks();
         assertTrue(books.isEmpty(), "Expected the user's cart to be empty, but found: " + books);
 
