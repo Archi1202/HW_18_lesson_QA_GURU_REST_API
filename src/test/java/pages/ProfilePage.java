@@ -12,7 +12,7 @@ public class ProfilePage extends TestBase {
     private final SelenideElement
             userNameValue = $("#userName-value"),
             firstBookRow = $$(".rt-tr-group").first(),
-            deleteConfirmButton = $("#closeSmallModal-ok"),
+            deleteConfirmButton = $("#closeSmallModal-ok");
 
     private final String bookLink = "a[href='/profile?book=%s']";
 
