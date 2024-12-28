@@ -6,19 +6,21 @@ import models.*;
 import java.util.List;
 import java.util.Random;
 
-import static data.AuthData.USER_ID;
-import static data.AuthData.USER_TOKEN;
+import static helpers.extensions.LoginExtension.cookies;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static specs.Specification.*;
 
+
 public class BooksActions {
+
+
 
     @Step("Remove all books from the profile")
     public BooksActions deleteAllBooks() {
         given(requestSpec)
-                .header("Authorization", "Bearer " + USER_TOKEN)
-                .queryParam("UserId", USER_ID)
+                .header("Authorization", "Bearer " + cookies.getToken() )
+                .queryParam("UserId",cookies.getUserId())
                 .when()
                 .delete("/BookStore/v1/Books")
                 .then()
@@ -32,10 +34,10 @@ public class BooksActions {
         book.setIsbn(isbn);
 
         BooksCollectionRequestModel booksCollection = new BooksCollectionRequestModel();
-        booksCollection.setUserId(USER_ID);
+        booksCollection.setUserId(cookies.getUserId());
         booksCollection.setCollectionOfIsbns(List.of(book));
         given(requestSpec)
-                .header("Authorization", "Bearer " + USER_TOKEN)
+                .header("Authorization", "Bearer " + cookies.getToken())
                 .body(booksCollection)
                 .when()
                 .post("/BookStore/v1/Books")
@@ -50,8 +52,8 @@ public class BooksActions {
         BooksFromProfileResponseModel response =
                 given(requestSpec)
                         .when()
-                        .header("Authorization", "Bearer " + USER_TOKEN)
-                        .get("/Account/v1/User/" + USER_ID)
+                        .header("Authorization", "Bearer " + cookies.getToken())
+                        .get("/Account/v1/User/" + cookies.getUserId())
                         .then()
                         .spec(responseSpec200)
                         .extract().as(BooksFromProfileResponseModel.class);
@@ -65,7 +67,7 @@ public class BooksActions {
 
         return given(requestSpec)
                 .when()
-                .header("Authorization", "Bearer " + USER_TOKEN)
+                .header("Authorization", "Bearer " + cookies.getToken())
                 .get("/BookStore/v1/Books")
                 .then()
                 .spec(responseSpec200)

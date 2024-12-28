@@ -13,10 +13,8 @@ public class ProfilePage extends TestBase {
             userNameValue = $("#userName-value"),
             firstBookRow = $$(".rt-tr-group").first(),
             deleteConfirmButton = $("#closeSmallModal-ok"),
-            notLoggedInBanner = $(".form-label");
 
     private final String bookLink = "a[href='/profile?book=%s']";
-    private final String deleteButtonSelector = "#delete-record-undefined";
 
     @Step("Open the Profile Page")
     public ProfilePage openPage() {
@@ -24,6 +22,7 @@ public class ProfilePage extends TestBase {
         return this;
     }
 
+    @Step("Remove advertisement banners from top and bottom")
     public ProfilePage removeBanners() {
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
@@ -32,15 +31,9 @@ public class ProfilePage extends TestBase {
     }
 
     @Step("Verify that the correct user is logged in")
-    public ProfilePage checkLoginData(String username) {
+    public ProfilePage checkLoginData() {
+        String username = System.getProperty("storeUserName");
         userNameValue.shouldHave(text(username));
-        return this;
-    }
-
-    @Step("Verify that non-authorized users see the banner")
-    public ProfilePage checkNonAuthUserBanner() {
-        notLoggedInBanner.shouldBe(visible)
-                .shouldHave(text("Currently you are not logged into the Book Store application, please visit the "));
         return this;
     }
 
@@ -51,8 +44,8 @@ public class ProfilePage extends TestBase {
     }
 
     @Step("Delete first book from the profile page")
-    public ProfilePage deleteBookFromProfile(String isbn) {
-        firstBookRow.$(deleteButtonSelector).shouldBe(visible).click();
+    public ProfilePage deleteBookFromProfile() {
+        firstBookRow.$("#delete-record-undefined").shouldBe(visible).click();
         deleteConfirmButton.shouldBe(visible).click();
         return this;
     }

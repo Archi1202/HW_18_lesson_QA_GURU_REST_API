@@ -10,12 +10,14 @@ import static specs.Specification.*;
 public class Authorization {
 
     @Step("Receive Authorization Data via API")
-    public static LoginResponseModel getAuthData(String userName,String userPassword){
-        LoginRequestModel requestModel = new LoginRequestModel();
-        requestModel.setUserName(userName);
-        requestModel.setPassword(userPassword);
+    public static LoginResponseModel getAuthData(){
 
-        return given()
+        LoginResponseModel responseModel;
+
+        LoginRequestModel requestModel = new LoginRequestModel(System.getProperty("storeUserName"),
+                System.getProperty("storeUserPassword"));
+
+        responseModel = given()
                 .spec(requestSpec)
                 .body(requestModel)
                 .when()
@@ -23,5 +25,7 @@ public class Authorization {
                 .then()
                 .spec(responseSpec200)
                 .extract().as(LoginResponseModel.class);
+
+        return responseModel;
     }
 }

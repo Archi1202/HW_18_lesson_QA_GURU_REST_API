@@ -10,7 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import pages.ProfilePage;
 
 import java.util.Map;
 
@@ -41,8 +40,6 @@ public class TestBase {
     @BeforeEach
     void preTest() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-        ProfilePage profilePage = new ProfilePage();
-        profilePage.removeBanners();
     }
 
     @AfterEach
