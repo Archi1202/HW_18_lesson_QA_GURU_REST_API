@@ -31,8 +31,7 @@ public class ProfilePage extends TestBase {
     }
 
     @Step("Verify that the correct user is logged in")
-    public ProfilePage checkLoginData() {
-        String username = System.getProperty("storeUserName");
+    public ProfilePage checkLoginData(String username) {
         userNameValue.shouldHave(text(username));
         return this;
     }

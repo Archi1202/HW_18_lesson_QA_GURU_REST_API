@@ -27,7 +27,7 @@ public class BookStoreTests extends TestBase {
         profilePage
                 .openPage()
                 .removeBanners()
-                .checkLoginData()
+                .checkLoginData(System.getProperty("storeUserName"))
                 .checkBookInUserProfile(isbn)
                 .deleteBookFromProfile()
                 .checkBookAfterDeletion(isbn);
